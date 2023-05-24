@@ -1,43 +1,38 @@
 package com.gmail.vladimirprocean.moviegalleryapp.config;
 
-import com.gmail.vladimirprocean.moviegalleryapp.util.CustomPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-    private UserDetailsService userDetailsService;
-    private CustomPasswordEncoder customPasswordEncoder;
 
-    public SecurityConfig(UserDetailsService userDetailsService, CustomPasswordEncoder customPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.customPasswordEncoder = customPasswordEncoder;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return customPasswordEncoder.getPasswordEncoder();
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.authenticationProvider = authenticationProvider;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/public/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .logout().permitAll()
-                .and()
-                .userDetailsService(userDetailsService)
-                .csrf().disable()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 }
