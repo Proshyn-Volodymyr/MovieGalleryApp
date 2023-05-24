@@ -16,7 +16,7 @@ public class Library {
     public Library() {
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="libraries_movies", joinColumns = @JoinColumn(name="libraries_id"), inverseJoinColumns = @JoinColumn(name = "movies_id"))
     private List<Movie> movies;
 }

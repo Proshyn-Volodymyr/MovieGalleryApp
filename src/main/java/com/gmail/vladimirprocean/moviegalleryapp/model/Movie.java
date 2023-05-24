@@ -2,6 +2,7 @@ package com.gmail.vladimirprocean.moviegalleryapp.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Movie {
 
     @ElementCollection
     @CollectionTable(name = "movies_genre_ids", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "genre_ids")
     private List<Integer> genre_ids;
     @ManyToMany(mappedBy = "movies")
     private List<Library> libraries;
