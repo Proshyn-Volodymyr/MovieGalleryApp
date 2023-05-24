@@ -2,6 +2,7 @@ package com.gmail.vladimirprocean.moviegalleryapp.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -16,11 +17,14 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "library_id")
     private Library library;
-//    @ManyToOne
-//    private List<Authority> authorities = new ArrayList<>();
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
@@ -55,6 +59,14 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public Library getLibrary() {
         return library;
     }
@@ -63,15 +75,10 @@ public class User implements UserDetails {
         this.library = library;
     }
 
-//    public void setAuthorities(List<Authority> authorities) {
-//        this.authorities = authorities;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new Authority("ROLE_USER"));
-        return roles;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
