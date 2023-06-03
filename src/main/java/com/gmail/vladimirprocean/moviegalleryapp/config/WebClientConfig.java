@@ -33,24 +33,4 @@ public class WebClientConfig implements WebFluxConfigurer {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
-//    @Bean
-//    public Function<TmdbResponse, List<Movie>> tmdbResponseListFunction(){
-//        return new Function<TmdbResponse, List<Movie>>() {
-//            @Override
-//            public List<Movie> apply(TmdbResponse tmdbResponse) {
-//                return tmdbResponse.getMovies();
-//            }
-//        };
-//    }
-//    @Bean
-//    public Function<UriBuilder, URI> trendingMoviesUri(@Value("${tmdb.apiKey}") final String apiKey){
-//        return new Function<UriBuilder, URI>() {
-//            @Override
-//            public URI apply(UriBuilder uriBuilder) {
-//                return uriBuilder.path("movie/now_playing")
-//                        .queryParam("api_key", apiKey)
-//                        .build();
-//            }
-//        };
-//    }
 }

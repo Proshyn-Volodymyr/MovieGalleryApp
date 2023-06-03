@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("movie/now_playing").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
