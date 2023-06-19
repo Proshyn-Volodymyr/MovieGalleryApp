@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import "./App.css";
 import HomeView from "./views/HomeView";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import NotFoundView from "./views/NotFoundView/NotFoundView";
 import FormView from "./views/FormView/FormView";
 import MovieDetailsView from "./views/MovieDetailsView/MovieDetailsView";
-import MyLibraryView from "./views/MyLibraryView/MyLibraryView";
+// import MyLibraryView from "./views/MyLibraryView/MyLibraryView";
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -43,7 +43,10 @@ function App() {
               }
             ></Route>
           </Route>
-          <Route path="/movie/:movieId" element={<MovieDetailsView />}></Route>
+          <Route
+            path="/movie/movie_details/:movieId"
+            element={<MovieDetailsView />}
+          ></Route>
           {/* <Route path="/my-library" element={<MyLibraryView />}></Route>
           <Route path="*" element={<NotFoundView />}></Route> */}
         </Routes>

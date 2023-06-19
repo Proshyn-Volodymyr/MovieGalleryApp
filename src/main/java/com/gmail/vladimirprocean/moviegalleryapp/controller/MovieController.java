@@ -1,10 +1,12 @@
 package com.gmail.vladimirprocean.moviegalleryapp.controller;
 
 import com.gmail.vladimirprocean.moviegalleryapp.model.Movie;
+import com.gmail.vladimirprocean.moviegalleryapp.model.MovieDetails;
 import com.gmail.vladimirprocean.moviegalleryapp.service.MovieService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -29,5 +31,11 @@ public class MovieController {
     public Mono<List<Movie>> getTrendingMovies(){
     return movieService.getTrendingMovies(apiKey);
     }
+
+    @GetMapping("/movie_details")
+    public Mono<MovieDetails> getMovieDetails(@RequestParam int id){
+        return movieService.getMovieDetails(id);
+    }
+
 
 }

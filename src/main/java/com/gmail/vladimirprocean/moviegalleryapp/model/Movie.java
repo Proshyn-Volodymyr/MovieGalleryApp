@@ -12,6 +12,7 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Integer id;
     @JsonProperty("poster_path")
     private String poster_path;

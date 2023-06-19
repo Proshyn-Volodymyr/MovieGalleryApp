@@ -12,7 +12,6 @@ const { TMDB_KEY, BASE_URL } = apiParameters;
 async function fetchAPI(url = "") {
   Loading.circle({ clickToClose: true });
   const response = await axios.get(url);
-  console.log(url);
   try {
     const data = response.data;
     if (response.status === 200) {
@@ -29,4 +28,10 @@ async function fetchAPI(url = "") {
 }
 export function getNowPlaying() {
   return fetchAPI(`movie/now_playing`);
+}
+export function getMovieDetail(id) {
+  return fetchAPI(`/movie/movie_details?id=${id}`);
+}
+export function getVideo(id) {
+  return fetchAPI(`movie/${id}/videos`);
 }
